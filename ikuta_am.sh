@@ -2,15 +2,7 @@
 
 # invoke every minutes from cron
 
-if [ $# -lt 1 ]; then
-    hourmin=$(date +%H%M)
-    week=$(date +%w)
-else
-    hourmin=$2
-    week=$1
-fi
-
-play()
+mpc_play()
 {
     mpc clear
     mpc load PL_$@
@@ -20,50 +12,69 @@ play()
 weekday()
 {
     case $hourmin in
-	0825) play Radio ;;
-	0830) play 3S ;;
-	0838) play PreBell ;;
-	1000) play Bell ;;
-	1010) play Bell ;;
-	1200) play Bell ;;
-	1240) play PreBell ;;
-	1245) play Bell ;;
-	1500) play Bell ;;
-	1510) play Bell ;;
-	1658) play PreBell ;;
-	1700) play Bell ;;
-	1715) play Bell ;;
-	1815) play Bell ;;
-	1915) play Bell ;;
+	0825) mpc_play Radio ;;
+	0830) mpc_play 3S ;;
+	0838) mpc_play PreBell ;;
+	1000) mpc_play Bell ;;
+	1010) mpc_play Bell ;;
+	1200) mpc_play Bell ;;
+	1240) mpc_play PreBell ;;
+	1245) mpc_play Bell ;;
+	1500) mpc_play Bell ;;
+	1510) mpc_play Bell ;;
+	1658) mpc_play PreBell ;;
+	1700) mpc_play Bell ;;
+	1715) mpc_play Bell ;;
+	1815) mpc_play Bell ;;
+	1915) mpc_play Bell ;;
     esac
 }
 
 weekend()
 {
     case $hourmin in
-	0825) play Radio ;;
-	0830) play Bell ;;
-	1000) play Bell ;;
-	1010) play Bell ;;
-	1200) play Bell ;;
-	1240) play PreBell ;;
-	1245) play Bell ;;
-	1500) play Bell ;;
-	1510) play Bell ;;
-	1658) play PreBell ;;
-	1700) play Bell ;;
+	0825) mpc_play Radio ;;
+	0830) mpc_play Bell ;;
+	1000) mpc_play Bell ;;
+	1010) mpc_play Bell ;;
+	1200) mpc_play Bell ;;
+	1240) mpc_play PreBell ;;
+	1245) mpc_play Bell ;;
+	1500) mpc_play Bell ;;
+	1510) mpc_play Bell ;;
+	1658) mpc_play PreBell ;;
+	1700) mpc_play Bell ;;
     esac
 }
 
 dayoff()
 {
     case $hourmin in
-	0830) play Bell ;;
-	1200) play Bell ;;
-	1245) play Bell ;;
-	1700) play Bell ;;
+	0830) mpc_play Bell ;;
+	1200) mpc_play Bell ;;
+	1245) mpc_play Bell ;;
+	1700) mpc_play Bell ;;
     esac
 }
+
+if [ $# -lt 1 ]; then
+    hourmin=$(date +%H%M)
+    week=$(date +%w)
+else
+    case "$1" in
+	[0123456])
+	    hourmin=$2
+	    week=$1
+	    ;;
+	h | help)
+	    echo "Usage: ikuta_am.sh {Bell,PreBell,3S,Radio,1 0825}"
+	    ;;
+	*)
+	    mpc_play $1
+	    exit 0
+	    ;;
+    esac
+fi
 
 case $week in
     [12345])
