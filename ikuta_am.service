@@ -1,0 +1,7 @@
+[Unit]
+Description=IKUTA Annouce Machine
+After=network.target
+
+[Service]
+ExecStart=/opt/ikuta_am/ikuta_am.sh
+WorkingDirectory=/opt/ikuta_am
