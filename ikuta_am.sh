@@ -4,9 +4,10 @@
 
 mpc_play()
 {
-    mpc clear
-    mpc load PL_$@
-    mpc play 1
+    if [ `curl -s http://localhost:3000/api/v1/getState | jq -r '.status + .uri | test("^playmnt/INTERNAL/eam/.*")'` != true ]; then
+	curl -s -o /dev/null http://localhost:3000/api/v1/commands/?cmd=repeat\&value=false
+	curl -s -o /dev/null http://localhost:3000/api/v1/commands/?cmd=playplaylist\&name=VPL$@
+    fi
 }
 
 weekday()

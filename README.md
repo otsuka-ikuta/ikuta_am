@@ -2,7 +2,7 @@
 
 ## Description
 
-アナウンス・マシーンの老朽化に伴い、MPD + Micro Server で置き換える
+アナウンス・マシーンの老朽化に伴い、volumio + Micro Server で置き換える
 
 ## Recipe
 
@@ -16,6 +16,12 @@
   * `sudo systemctl start ikuta_am.timer`
 * Log
   * `sudo journalctl -f -u ikuta_am.service`
+* Emergency broadcast
+  * `ikuta_em <number>`
+  * 火災発生箇所のコード1-18が必要
+  * 0で止めるまで繰り返し放送
+  * 緊急放送以外は止められない
+  * チャイムなどが割り込むことはない
 
 ## Security
 
@@ -33,8 +39,19 @@ passwd foo
 ```
 * Web interface
 ```
-sudo /sbin/iptables -A INPUT -s (許可するPCのアドレス) -j ACCEPT
-sudo /sbin/iptables -A INPUT -p tcp --destination-port 3000 -j DROP
+/lib/systemd/system/iptables.service:
+6c6
+< ExecStart=/sbin/iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
+---
+> ExecStart=/sbin/iptables-restore /etc/iptables/rules.v4
+
+sudo -i
+/sbin/iptables -F INPUT
+/sbin/iptables -A INPUT -s 127.0.0.1 -j ACCEPT
+/sbin/iptables -A INPUT -s (許可するPCのアドレス) -j ACCEPT
+/sbin/iptables -A INPUT -p tcp --destination-port 3000 -j DROP
+mkdir /etc/iptables
+/sbin/iptables-save > /etc/iptables/rules.v4
 ```
 * samba
 ```
