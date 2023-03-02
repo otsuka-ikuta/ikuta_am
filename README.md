@@ -64,6 +64,13 @@ smbpasswd -a volumio
 	* Shairport-Sync to OFF
 	* DLNA Browser to OFF
 
+## zabbix agent
+
+* zabbix-agent はメモリーリークがあるので、起動から1ヶ月経過したらプロセス再起動を行うようにした
+* Tinker Board (armhf) 版は 2.5ヶ月程度でメモリーを使い果たしてしまう
+* Intel (amd64) 版はもう少し緩やかだがメモリーリークは存在するようだ
+* 再起動の実施日時は systemctl list-timers で確認できる
+
 ## 参考資料
 
 * [systemdで定期的にスクリプト実行](https://monomonotech.jp/kurage/raspberrypi/systemd_timer.html)

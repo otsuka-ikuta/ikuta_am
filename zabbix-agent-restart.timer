@@ -1,0 +1,9 @@
+[Unit]
+Description=Run zabbix-agent-restart monthly
+
+[Timer]
+OnBootSec=1M
+OnUnitActiveSec=1M
+
+[Install]
+WantedBy=timers.target

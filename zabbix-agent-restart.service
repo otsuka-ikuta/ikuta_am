@@ -1,0 +1,6 @@
+[Unit]
+Description=Scheduled restart zabbix agent
+
+[Service]
+Type=simple
+ExecStart=/bin/systemctl restart zabbix-agent
