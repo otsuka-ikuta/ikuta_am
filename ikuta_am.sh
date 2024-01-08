@@ -14,8 +14,7 @@ weekday()
 {
     case $hourmin in
 	0825) mpc_play Radio ;;
-	0838) mpc_play PreBell ;;
-	0840) mpc_play Bell ;;
+	0830) mpc_play Bell ;;
 	1000) mpc_play Bell ;;
 	1010) mpc_play Bell ;;
 	1200) mpc_play Bell ;;
