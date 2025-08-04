@@ -18,6 +18,7 @@ weekday()
 	1000) mpc_play Bell ;;
 	1010) mpc_play Bell ;;
 	1200) mpc_play Bell ;;
+	1240) mpc_play Radio ;;
 	1244) mpc_play PreBell ;;
 	1245) mpc_play 3S ;;
 	1253) mpc_play PreBell ;;
